@@ -20,7 +20,10 @@ public class Redimencionar extends Caracteristica {
 
 	
 	public static void main(String[] args) {
-		
+		/*
+		 * Processo no qual faz leitura de arquivos
+		 * lerArq é o obj no qual contém o arquivo
+		 */
 		try {
 		      FileReader arq = new FileReader("teste_2019_1.csv");
 		      BufferedReader lerArq = new BufferedReader(arq);
@@ -28,26 +31,34 @@ public class Redimencionar extends Caracteristica {
 		      String linha = lerArq.readLine(); // lê a primeira linha
 		// a variável "linha" recebe o valor "null" quando o processo
 		// de repetição atingir o final do arquivo texto
-		      int k = 1;
-		      while (k  <= 3) {
-		        //System.out.print(linha);
+		      int k = 0;
+		      while (k  <= 2) {
+		        /*
+		         * Inicializa a váriável aux com uma linha do dataset  para poder usar o método split
+		         */
 		    	String aux = lerArq.readLine(); // lê da segunda até a última linha
-		    	int i = 1;
+		    	int i = 0;
 		    	String cc = null;
 		    	Caracteristica c1 = new Caracteristica();
-		    	while (i <= 10) {
-		    		cc = aux.split(",")[i+1];
-		    		if (i == 1001) {
-		    			c1.setTipo(cc);
+		    	while (i < 1001) {
+		    		cc = aux.split(",")[i];
+		    		if (i == 1000 ) {
+		    			if (cc.equals("person")) {
+		    			c1.setTipo("person");
 		    			break;
+		    			}
+		    				c1.setTipo("noPerson");
+		    			
+		    			break;
+		    			
 		    		}
 		    		
-		    		System.out.println(cc);
+		    		//System.out.println(c1.getTipo());
 		    		float f = Float.parseFloat(cc);
 		    		c1.setInformacao(f);
+		    		
 		    		cc = "";
 		    		i++;
-		    		
 		    	}
 		    	imagens.add(c1);
 		    	k++;
@@ -73,13 +84,16 @@ public class Redimencionar extends Caracteristica {
 			//System.out.print(kj + " ");
 			
 		//}
-		System.out.println (arrayOfFeatures.size());
-		for (int i = 0; i < 2; i ++) {
-			for (int k = 0; k < 5; k++) {
+	//	System.out.println (arrayOfFeatures.size());
+		for (int i = 0; i < 1; i ++) {
+			for (int k = 0; k < 1000; k++) {
 				System.out.print (imagens.get(i).getInformacao(k) + ", ");
-				
 			}
+			System.out.print (imagens.get(i).getTipo());
+			System.out.println();
 			
 		}
 	}
 }
+
+
