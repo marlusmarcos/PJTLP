@@ -17,9 +17,24 @@ import org.opencv.objdetect.HOGDescriptor;
 public class Redimencionar extends Caracteristica {
 	Path caminho = Paths.get("teste_2019_1.csv");	
 	static ArrayList <Caracteristica> imagens = new ArrayList();
+	
+	public void calcularDistancia (Caracteristica cc, ArrayList a1) {
+		float k;
+		float y;
+		float aux = 0;
+		for (int i = 0; i < 1000; ++i) {
+		k = cc.getInformacao(i);
+		y = (float) a1.get(i);
+		aux = aux + (float) Math.pow(k-y, 2);
+		}
+		cc.setSaldoDistance((float) Math.sqrt(aux));
+	}
+
 
 	
 	public static void main(String[] args) {
+		Redimencionar r1 = new Redimencionar() ;
+		Caracteristica c1 = new Caracteristica();
 		/*
 		 * Processo no qual faz leitura de arquivos
 		 * lerArq é o obj no qual contém o arquivo
@@ -32,14 +47,14 @@ public class Redimencionar extends Caracteristica {
 		// a variável "linha" recebe o valor "null" quando o processo
 		// de repetição atingir o final do arquivo texto
 		      int k = 0;
-		      while (k  <= 2) {
+		      while (k  <= 20) {
 		        /*
 		         * Inicializa a váriável aux com uma linha do dataset  para poder usar o método split
 		         */
 		    	String aux = lerArq.readLine(); // lê da segunda até a última linha
 		    	int i = 0;
 		    	String cc = null;
-		    	Caracteristica c1 = new Caracteristica();
+		    	//Caracteristica c1 = new Caracteristica();
 		    	while (i < 1001) {
 		    		cc = aux.split(",")[i];
 		    		if (i == 1000 ) {
@@ -68,7 +83,8 @@ public class Redimencionar extends Caracteristica {
 	        System.err.printf("Erro na abertura do arquivo: %s.\n",
 	          e.getMessage());
 	    }
-	//System.out.print ("\n");
+	//	Caracteristica c1 = new Caracteristica();
+		
 				
 	System.loadLibrary(Core.NATIVE_LIBRARY_NAME);
 	
@@ -82,17 +98,26 @@ public class Redimencionar extends Caracteristica {
 		List<Float> arrayOfFeatures = features.toList();
 		//for (float kj : arrayOfFeatures) {
 			//System.out.print(kj + " ");
-			
+		ArrayList<Float> a1	= new ArrayList ();
+		for (int i = 0; i < 1000; ++i) {
+			a1.add(arrayOfFeatures.get(i));			
+		}
+		
 		//}
 	//	System.out.println (arrayOfFeatures.size());
-		for (int i = 0; i < 1; i ++) {
-			for (int k = 0; k < 1000; k++) {
-				System.out.print (imagens.get(i).getInformacao(k) + ", ");
-			}
-			System.out.print (imagens.get(i).getTipo());
-			System.out.println();
+		//for (int i = 0; i < 10; i ++) {
+		//	System.out.print(i + ") ");
+			//for (int k = 0; k < 1000; k++) {
+		r1.calcularDistancia(c1, a1);
+				System.out.print (imagens.get(20).getInformacao(999) + ", ");
+	//		}
+	System.out.println (imagens.get(20).getTipo());
+	System.out.println ("=8=88=8=8=8=88=8=8=888=8=8=88=8=8=");
+	System.out.println (c1.getSaldoDistance());
+	 
+	
 			
-		}
+		//}
 	}
 }
 
