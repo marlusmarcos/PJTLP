@@ -13,6 +13,8 @@ import org.opencv.imgcodecs.Imgcodecs;
 import org.opencv.imgproc.Imgproc;
 import org.opencv.objdetect.HOGDescriptor;
 
+//import knnPronto.Caracteristica;
+
 
 
 public class Redimencionar extends Caracteristica {
@@ -46,6 +48,7 @@ public class Redimencionar extends Caracteristica {
 	
 	public static void main(String[] args) {
 		Redimencionar r1 = new Redimencionar() ;
+		ArrayList <Caracteristica> menoresImagens = new ArrayList();
 		//Caracteristica c1 = new Caracteristica();
 		ArrayList <Caracteristica> imagens = new ArrayList();
 		/*
@@ -60,7 +63,7 @@ public class Redimencionar extends Caracteristica {
 		// a variável "linha" recebe o valor "null" quando o processo
 		// de repetição atingir o final do arquivo texto
 		      int k = 0;
-		      while (k  <= 20) {
+		      while (k  < 32) {
 		        /*
 		         * Inicializa a váriável aux com uma linha do dataset  para poder usar o método split
 		         */
@@ -96,15 +99,13 @@ public class Redimencionar extends Caracteristica {
 	        System.err.printf("Erro na abertura do arquivo: %s.\n",
 	          e.getMessage());
 	    }
-	//	Caracteristica c1 = new Caracteristica();
-		
-				
+					
 	System.loadLibrary(Core.NATIVE_LIBRARY_NAME);
 	
 		HOGDescriptor hog = new HOGDescriptor();
 		Mat img = new Mat();
 		MatOfFloat features = new MatOfFloat();
-		img = Imgcodecs.imread("negative-frame-000015.png", Imgcodecs.IMREAD_GRAYSCALE);
+		img = Imgcodecs.imread("abcfc.png", Imgcodecs.IMREAD_GRAYSCALE);
 		Imgproc.resize(img, img, new Size(64,128), 0.5, 0.5, Imgproc.INTER_LINEAR);
 		hog.compute(img,features);
 		
@@ -115,6 +116,8 @@ public class Redimencionar extends Caracteristica {
 		for (int i = 0; i < 1000; ++i) {
 			a1.add(arrayOfFeatures.get(i));			
 		}
+	
+/**		
 		
 		//}
 	//	System.out.println (arrayOfFeatures.size());
@@ -122,14 +125,72 @@ public class Redimencionar extends Caracteristica {
 		//	System.out.print(i + ") ");
 			//for (int k = 0; k < 1000; k++) {
 		r1.calcularDistancia(r1.getImagens(0), a1);
+		r1.calcularDistancia(r1.getImagens(1), a1);
+		r1.calcularDistancia(r1.getImagens(2), a1);
+		r1.calcularDistancia(r1.getImagens(25), a1);
 			//	System.out.print (imagens.get(20).getInformacao(999) + ", ");
 	//		}
 	System.out.println (r1.getImagens(0).getTipo());
 	System.out.println ("=8=88=8=8=8=88=8=8=888=8=8=88=8=8=");
 	System.out.println (r1.getImagens(0).getSaldoDistance());
-	 
-	
+	System.out.println (r1.getImagens(1).getTipo());
+	System.out.println ("=8=88=8=8=8=88=8=8=888=8=8=88=8=8=");
+	System.out.println (r1.getImagens(1).getSaldoDistance());
+	System.out.println (r1.getImagens(2).getTipo());
+	System.out.println ("=8=88=8=8=8=88=8=8=888=8=8=88=8=8=");
+	System.out.println (r1.getImagens(2).getSaldoDistance());
+	System.out.println (r1.getImagens(25).getTipo());
+	System.out.println ("=8=88=8=8=8=88=8=8=888=8=8=88=8=8=");
+	System.out.println (r1.getImagens(25).getSaldoDistance());
+*/
+		
+		
+		for (int i = 0; i < 32; i ++) {
+				r1.calcularDistancia(r1.getImagens(i), a1);
+		}
+		
+		System.out.println ("Printando as distancias de cada obj: ");
+		for (int i = 0; i < 30; i++) {
+			System.out.println (r1.getImagens(i).getSaldoDistance());
 			
+		}
+		
+		
+		
+		
+		// ============================================================
+		
+		for (int i=0; i < 9; i++){
+			menoresImagens.add(r1.getImagens(i));
+		}
+		for (int i = 9; i < 31; i++) {
+			for (int k = 0; k < 9; k++) {
+				if (menoresImagens.get(k).getSaldoDistance() > r1.getImagens(i).getSaldoDistance() ) {
+					menoresImagens.set(k, r1.getImagens(i));
+				}
+			}
+			
+			
+		}
+		int cont1 = 0;
+		int cont2 = 0;
+		for (int i=0; i < 9; i++) {
+			if (menoresImagens.get(i).getTipo().equals("noPerson")) {
+				cont2 ++;
+			} else {
+				cont1++;
+			}
+			
+
+		}
+		if (cont1 > cont2) {
+		System.out.println ("Tem pessoas na imagem" + cont1 + "***" + cont2);
+		} else {
+			System.out.println ("Não Tem pessoas na imagem " + cont2);
+		}
+		
+	
+		// =============================================================	
 		//}
 	}
 }
