@@ -5,7 +5,6 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
-
 import org.opencv.core.Core;
 import org.opencv.core.Mat;
 import org.opencv.core.MatOfFloat;
@@ -14,9 +13,22 @@ import org.opencv.imgcodecs.Imgcodecs;
 import org.opencv.imgproc.Imgproc;
 import org.opencv.objdetect.HOGDescriptor;
 
+
+
 public class Redimencionar extends Caracteristica {
 	Path caminho = Paths.get("teste_2019_1.csv");	
-	static ArrayList <Caracteristica> imagens = new ArrayList();
+	ArrayList <Caracteristica> imagens = new ArrayList();
+
+	public Caracteristica getImagens(int i) {
+		return imagens.get(i);
+	}
+
+	public void setImagens(Caracteristica ADD_GRR) { //adiciona um obj caracteristica na lista de imagens
+		imagens.add(ADD_GRR);
+	}
+	
+	
+	
 	
 	public void calcularDistancia (Caracteristica cc, ArrayList a1) {
 		float k;
@@ -34,7 +46,8 @@ public class Redimencionar extends Caracteristica {
 	
 	public static void main(String[] args) {
 		Redimencionar r1 = new Redimencionar() ;
-		Caracteristica c1 = new Caracteristica();
+		//Caracteristica c1 = new Caracteristica();
+		ArrayList <Caracteristica> imagens = new ArrayList();
 		/*
 		 * Processo no qual faz leitura de arquivos
 		 * lerArq é o obj no qual contém o arquivo
@@ -54,7 +67,7 @@ public class Redimencionar extends Caracteristica {
 		    	String aux = lerArq.readLine(); // lê da segunda até a última linha
 		    	int i = 0;
 		    	String cc = null;
-		    	//Caracteristica c1 = new Caracteristica();
+		    	Caracteristica c1 = new Caracteristica();
 		    	while (i < 1001) {
 		    		cc = aux.split(",")[i];
 		    		if (i == 1000 ) {
@@ -75,7 +88,7 @@ public class Redimencionar extends Caracteristica {
 		    		cc = "";
 		    		i++;
 		    	}
-		    	imagens.add(c1);
+		    		r1.setImagens(c1);
 		    	k++;
 		      }
 		      arq.close();
@@ -91,7 +104,7 @@ public class Redimencionar extends Caracteristica {
 		HOGDescriptor hog = new HOGDescriptor();
 		Mat img = new Mat();
 		MatOfFloat features = new MatOfFloat();
-		img = Imgcodecs.imread("C:\\Users\\Marlus\\Desktop\\imgs.png", Imgcodecs.IMREAD_GRAYSCALE);
+		img = Imgcodecs.imread("negative-frame-000015.png", Imgcodecs.IMREAD_GRAYSCALE);
 		Imgproc.resize(img, img, new Size(64,128), 0.5, 0.5, Imgproc.INTER_LINEAR);
 		hog.compute(img,features);
 		
@@ -108,17 +121,15 @@ public class Redimencionar extends Caracteristica {
 		//for (int i = 0; i < 10; i ++) {
 		//	System.out.print(i + ") ");
 			//for (int k = 0; k < 1000; k++) {
-		r1.calcularDistancia(c1, a1);
-				System.out.print (imagens.get(20).getInformacao(999) + ", ");
+		r1.calcularDistancia(r1.getImagens(0), a1);
+			//	System.out.print (imagens.get(20).getInformacao(999) + ", ");
 	//		}
-	System.out.println (imagens.get(20).getTipo());
+	System.out.println (r1.getImagens(0).getTipo());
 	System.out.println ("=8=88=8=8=8=88=8=8=888=8=8=88=8=8=");
-	System.out.println (c1.getSaldoDistance());
+	System.out.println (r1.getImagens(0).getSaldoDistance());
 	 
 	
 			
 		//}
 	}
 }
-
-
