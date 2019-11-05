@@ -57,14 +57,14 @@ public class Redimencionar extends Caracteristica {
 		 * lerArq é o obj no qual contém o arquivo
 		 */
 		try {
-		      FileReader arq = new FileReader("C:\\Users\\Marlus\\Downloads\\teste_2019_1.csv");
+		      FileReader arq = new FileReader("dataset_2019_1 (1).csv");
 		      BufferedReader lerArq = new BufferedReader(arq);
 		 
 		      String linha = lerArq.readLine(); // lê a primeira linha
 		// a variável "linha" recebe o valor "null" quando o processo
 		// de repetição atingir o final do arquivo texto
 		      int k = 0;
-		      while (k  < 32) {
+		      while (k  < 100) {
 		        /*
 		         * Inicializa a váriável aux com uma linha do dataset  para poder usar o método split
 		         */
@@ -106,7 +106,7 @@ public class Redimencionar extends Caracteristica {
 		HOGDescriptor hog = new HOGDescriptor();
 		Mat img = new Mat();
 		MatOfFloat features = new MatOfFloat();
-		img = Imgcodecs.imread("C:\\Users\\Marlus\\Desktop\\imgs.png", Imgcodecs.IMREAD_GRAYSCALE);
+		img = Imgcodecs.imread("9.png", Imgcodecs.IMREAD_GRAYSCALE);
 		Imgproc.resize(img, img, new Size(64,128), 0.5, 0.5, Imgproc.INTER_LINEAR);
 		hog.compute(img,features);
 		
@@ -146,15 +146,16 @@ public class Redimencionar extends Caracteristica {
 */
 		
 		
-		for (int i = 0; i < 32; i ++) {
+		for (int i = 0; i < 100; i ++) {
 				r1.calcularDistancia(r1.getImagens(i), a1);
 		}
 		
 		System.out.println ("Printando as distancias de cada obj: ");
-		for (int i = 0; i < 30; i++) {
-			System.out.println (r1.getImagens(i).getSaldoDistance());
+	//	for (int i = 0; i < 30; i++) {
 			
-		}
+		//	System.out.println (r1.getImagens(i).getSaldoDistance());
+			
+	//	}
 		
 		
 		
@@ -164,27 +165,25 @@ public class Redimencionar extends Caracteristica {
 		for (int i=0; i < 9; i++){
 			menoresImagens.add(r1.getImagens(i));
 		}
-		for (int i = 9; i < 31; i++) {
-			//Collections.sort(menoresImagens);
+		for (int i = 9; i < 100; i++) {
 			Collections.sort(menoresImagens, Caracteristica.saldoDistanceComparator);
 			
-			
-			
-			for (int k = 0; k < 9; k++) {
-				if (menoresImagens.get(k).getSaldoDistance() > r1.getImagens(i).getSaldoDistance() ) {
-					menoresImagens.set(k, r1.getImagens(i));
+			for (int k = 0; k < 31; k++) {
+				if (menoresImagens.get(8).getSaldoDistance() > r1.getImagens(i).getSaldoDistance() ) {
+					menoresImagens.set(8, r1.getImagens(i));
 				}
 			}
 			
 			
 		}
+		Collections.sort(menoresImagens, Caracteristica.saldoDistanceComparator);
 		int cont1 = 0;
 		int cont2 = 0;
 		for (int i=0; i < 9; i++) {
-			if (menoresImagens.get(i).getTipo().equals("noPerson")) {
-				cont2 ++;
+			if (menoresImagens.get(i).getTipo() == "person") {
+				cont1 ++;
 			} else {
-				cont1++;
+				cont2++;
 			}
 			
 
@@ -194,23 +193,25 @@ public class Redimencionar extends Caracteristica {
 		} else {
 			System.out.println ("Não Tem pessoas na imagem " + cont2);
 		}
+		for (int i =0; i < 9; i++) {
+		//	System.out.print(menoresImagens.get(i).getTipo() + ", ");
+			
+		}	
+		Collections.sort(r1.imagens, Caracteristica.saldoDistanceComparator);
+		for (int i = 0; i < 100; i++) {
+				
+				System.out.print (r1.getImagens(i).getSaldoDistance() + ",  == ");
+				if (i < 9) {
+					System.out.println (menoresImagens.get(i).getSaldoDistance() + menoresImagens.get(i).getTipo() );  
+				}
+				
+			}
 		
-	
 		// =============================================================	
 		//}
 	}
 	
-	public void Ordenar (ArrayList<Caracteristica> cc, int i, Caracteristica c2) {
-		Caracteristica aux = new Caracteristica();
-		if (i == 0) {
-			
-		} else {
-		if  (cc.get(i).getSaldoDistance() < cc.get(i-1).getSaldoDistance()) {
-			
-			
-		} 
-		}
-	}
+	
 	
 	/* ====================================================================== */
 	
