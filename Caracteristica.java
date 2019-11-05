@@ -1,4 +1,5 @@
 import java.util.ArrayList;
+import java.util.Comparator;
 public class Caracteristica {
 		protected float y;
 		protected  String tipo = "";
@@ -40,5 +41,24 @@ public class Caracteristica {
 		 * o for faz o somatoiria de xi, yi
 		 * aux guarda o  valor de  xi-zi ^2
 		 */
+		public int compareTo(Caracteristica o) {
+			// TODO Auto-generated method stub
+			return 0;
+		}
+		public static Comparator<Caracteristica> saldoDistanceComparator = new Comparator<Caracteristica>() {
+
+			public int compare(Caracteristica irs1, Caracteristica irs2) {
+				double x = irs1.getSaldoDistance() - irs2.getSaldoDistance();
+				if(x > 0) {
+					return 1;
+				}
+				else if(x == 0) {
+					return 0;
+				}
+				else{
+					return -1;
+				}
+			}
+		};
 		
 }
