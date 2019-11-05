@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import org.opencv.core.Core;
 import org.opencv.core.Mat;
@@ -56,7 +57,7 @@ public class Redimencionar extends Caracteristica {
 		 * lerArq é o obj no qual contém o arquivo
 		 */
 		try {
-		      FileReader arq = new FileReader("teste_2019_1.csv");
+		      FileReader arq = new FileReader("C:\\Users\\Marlus\\Downloads\\teste_2019_1.csv");
 		      BufferedReader lerArq = new BufferedReader(arq);
 		 
 		      String linha = lerArq.readLine(); // lê a primeira linha
@@ -105,7 +106,7 @@ public class Redimencionar extends Caracteristica {
 		HOGDescriptor hog = new HOGDescriptor();
 		Mat img = new Mat();
 		MatOfFloat features = new MatOfFloat();
-		img = Imgcodecs.imread("abcfc.png", Imgcodecs.IMREAD_GRAYSCALE);
+		img = Imgcodecs.imread("C:\\Users\\Marlus\\Desktop\\imgs.png", Imgcodecs.IMREAD_GRAYSCALE);
 		Imgproc.resize(img, img, new Size(64,128), 0.5, 0.5, Imgproc.INTER_LINEAR);
 		hog.compute(img,features);
 		
@@ -164,6 +165,11 @@ public class Redimencionar extends Caracteristica {
 			menoresImagens.add(r1.getImagens(i));
 		}
 		for (int i = 9; i < 31; i++) {
+			//Collections.sort(menoresImagens);
+			Collections.sort(menoresImagens, Caracteristica.saldoDistanceComparator);
+			
+			
+			
 			for (int k = 0; k < 9; k++) {
 				if (menoresImagens.get(k).getSaldoDistance() > r1.getImagens(i).getSaldoDistance() ) {
 					menoresImagens.set(k, r1.getImagens(i));
@@ -193,4 +199,22 @@ public class Redimencionar extends Caracteristica {
 		// =============================================================	
 		//}
 	}
+	
+	public void Ordenar (ArrayList<Caracteristica> cc, int i, Caracteristica c2) {
+		Caracteristica aux = new Caracteristica();
+		if (i == 0) {
+			
+		} else {
+		if  (cc.get(i).getSaldoDistance() < cc.get(i-1).getSaldoDistance()) {
+			
+			
+		} 
+		}
+	}
+	
+	/* ====================================================================== */
+	
+	
+	
+	
 }
